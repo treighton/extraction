@@ -13,6 +13,7 @@ public class ResourceNode {
     
     private int resourceAmount;
     private int resourceAmountMax;
+    private bool hasBuilding;
 
     public ResourceNode(Transform resourceNodeTransform, ResourceManager.ResourceType resourceType) {
         this.resourceNodeTransform = resourceNodeTransform;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameHandler : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameHandler : MonoBehaviour
     [SerializeField] int credits = 100;
     [SerializeField] int scrapMetal = 100;
     [SerializeField] private Transform[] ResourceNodeTransformArray;
+    public GameObject damageTextPrefab, enemyInstance;
+    public string textToDisplay;
 
     private List<ResourceNode> resourceNodeList;
 
@@ -30,8 +33,9 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TickSystem.onTick += delegate (object sender, TickSystem.OnTickEventArgs e) {
-            //Debug.Log("Tick:" + e.tick);
+        TickSystem.onTick += delegate (object sender, TickSystem.OnTickEventArgs e) {        
+                GameObject DamageText = Instantiate(damageTextPrefab, enemyInstance.transform);
+                DamageText.transform.GetComponent<TextMeshPro>().SetText(textToDisplay);
         };
     }
 
