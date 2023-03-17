@@ -7,11 +7,13 @@ public class Building {
 
     private GameObject gameObject;
     private SpriteRenderer spriteRenderer;
+    private ResourceNode resourceNode;
     private int buildTick;
     private int buildTickMax;
     private bool isConstructing;
 
-   public Building(Vector3 position, int ticksToConstruct) {
+   public Building(Vector3 position, int ticksToConstruct, ResourceNode resourceNodeObj) {
+        resourceNode = resourceNodeObj;
         gameObject = new GameObject("Building");
         spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = GameAssets.i.buildingConstruction_1;
@@ -36,6 +38,7 @@ public class Building {
             if (buildTick >= buildTickMax) {
                 // Building is fully constructed
                 isConstructing = false;
+                resourceNode.SetHasBuilding();
             }
         }
     }

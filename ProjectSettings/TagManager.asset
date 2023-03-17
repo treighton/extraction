@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Resource Location
+  - Resource Text
   layers:
   - Default
   - TransparentFX

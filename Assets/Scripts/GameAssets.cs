@@ -17,4 +17,5 @@ public class GameAssets : MonoBehaviour {
     public Sprite buildingConstruction_2;
     public Sprite buildingConstruction_3;
     public Sprite buildingConstruction_Built;
+    public GameObject damageTextPrefab;
 }

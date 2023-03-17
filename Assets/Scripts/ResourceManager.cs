@@ -27,11 +27,13 @@ public static class ResourceManager {
     public static void AddResourceAmount(ResourceType resourceType, int amount) {
         resourceAmountDictionary[resourceType] += amount;
         if (OnResourceAmountChanged != null) OnResourceAmountChanged(null, EventArgs.Empty);
+        Debug.Log(resourceAmountDictionary[resourceType]);
     }
 
     public static void RemoveResourceAmount(ResourceType resourceType, int amount) {
         resourceAmountDictionary[resourceType] -= amount;
         if (OnResourceAmountChanged != null) OnResourceAmountChanged(null, EventArgs.Empty);
+        Debug.Log(resourceAmountDictionary[resourceType]);
     }
 
     public static int GetResourceAmount(ResourceType resourceType) {

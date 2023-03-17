@@ -1,24 +1,23 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ResourceNode {
-
-    public static event EventHandler OnResourceNodeClicked;
 
     private Transform resourceNodeTransform;
     private ResourceManager.ResourceType resourceType;
     
+    public bool hasBuilding;
     private int resourceAmount;
     private int resourceAmountMax;
-    private bool hasBuilding;
+
 
     public ResourceNode(Transform resourceNodeTransform, ResourceManager.ResourceType resourceType) {
         this.resourceNodeTransform = resourceNodeTransform;
         this.resourceType = resourceType;
-        resourceAmountMax = 3000;
+        resourceAmountMax = 300;
         resourceAmount = resourceAmountMax;
     }
 
@@ -31,12 +30,33 @@ public class ResourceNode {
     }
 
     public ResourceManager.ResourceType GrabResource() {
-        resourceAmount -= 1;
+        
+        if (HasResources()) {
+            resourceAmount -= 1;
+
+            GameObject DamageText = GameObject.Instantiate(
+                GameAssets.i.damageTextPrefab, 
+                resourceNodeTransform
+            );
+            AddAmountIntoGameResources();
+            DamageText.transform.GetComponent<TextMeshPro>().SetText("+1");
+        }
 
         return resourceType;
     }
 
+
+    private void AddAmountIntoGameResources() {
+        foreach (ResourceManager.ResourceType resourceType in System.Enum.GetValues(typeof(ResourceManager.ResourceType))) {
+            ResourceManager.AddResourceAmount(resourceType, 1);
+        }
+    }
+
     public bool HasResources() {
         return resourceAmount > 0;
+    }
+
+    public void SetHasBuilding(){
+        hasBuilding = true;
     }
 }

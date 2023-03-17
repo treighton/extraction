@@ -44,9 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4645915f3727c48b4af68c2e2f8c8178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldNodeSprite: {fileID: 0}
-  treeNodeSprite: {fileID: 0}
   buildingConstruction_1: {fileID: -456419204, guid: 040e6f9ffb0e1424ca659763ccc13707, type: 3}
   buildingConstruction_2: {fileID: -436379601, guid: 040e6f9ffb0e1424ca659763ccc13707, type: 3}
   buildingConstruction_3: {fileID: 1357887229, guid: 040e6f9ffb0e1424ca659763ccc13707, type: 3}
   buildingConstruction_Built: {fileID: 635278144, guid: 040e6f9ffb0e1424ca659763ccc13707, type: 3}
+  damageTextPrefab: {fileID: 4920587405529235531, guid: f2b2813e9916548fb8affa9b372b9bc6, type: 3}

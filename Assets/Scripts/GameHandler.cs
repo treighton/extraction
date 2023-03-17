@@ -8,25 +8,28 @@ public class GameHandler : MonoBehaviour
 {
 
     private static GameHandler instance;
+    [SerializeField] GameObject resourceUI;
 
     [SerializeField] int resources = 100;
     [SerializeField] int credits = 100;
     [SerializeField] int scrapMetal = 100;
     [SerializeField] private Transform[] ResourceNodeTransformArray;
     public GameObject damageTextPrefab, enemyInstance;
-    public string textToDisplay;
-
-    private List<ResourceNode> resourceNodeList;
+    public Dictionary<Transform, ResourceNode> resourceNodeList;
 
     private void Awake() {
         instance = this;
 
         ResourceManager.Init();
 
-        resourceNodeList = new List<ResourceNode>();
+        resourceNodeList = new Dictionary<Transform, ResourceNode>();
+        resourceUI = GameObject.FindWithTag("Resource Text");
 
         foreach (Transform resourceNode in ResourceNodeTransformArray) {
-            resourceNodeList.Add(new ResourceNode(resourceNode, ResourceManager.ResourceType.Vulcanite));
+            resourceNodeList.Add(
+                resourceNode.transform, 
+                new ResourceNode(resourceNode, ResourceManager.ResourceType.Vulcanite)
+            );
         }
 
     }
@@ -34,8 +37,11 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         TickSystem.onTick += delegate (object sender, TickSystem.OnTickEventArgs e) {        
-                GameObject DamageText = Instantiate(damageTextPrefab, enemyInstance.transform);
-                DamageText.transform.GetComponent<TextMeshPro>().SetText(textToDisplay);
+            foreach (var resource in resourceNodeList) {
+                if (resource.Value.hasBuilding) {
+                    resource.Value.GrabResource();
+                }
+            }
         };
     }
 
@@ -49,10 +55,12 @@ public class GameHandler : MonoBehaviour
             RaycastHit2D hit = CastRay();
 
             if (hit.collider != null && hit.collider.gameObject.tag == "Resource Location") {
-                Debug.Log(hit.collider.gameObject.transform.position);
-                Debug.Log(mousePos);
-                new Building(hit.collider.gameObject.transform.position, 30);
+                new Building(hit.collider.gameObject.transform.position, 30, resourceNodeList[hit.collider.gameObject.transform]);
             }
+        }
+        if (ResourceManager.GetResourceAmount(ResourceManager.ResourceType.Vulcanite) > 0) {
+
+            resourceUI.GetComponent<TextMeshProUGUI>().SetText(""+ResourceManager.GetResourceAmount(ResourceManager.ResourceType.Vulcanite));
         }
     }
 
